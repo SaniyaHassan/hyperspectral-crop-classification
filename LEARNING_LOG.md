@@ -33,3 +33,33 @@ A normal RGB image stores three values per pixel representing the intensity of r
 **Why did you .gitignore the data instead of committing it?**
 
 The dataset was added to `.gitignore` because the `.mat` files are large binary files that unnecessarily increase the repository size and are not suitable for version control. Since the Indian Pines dataset is publicly available, anyone can download it separately. Git is best used for tracking source code and documentation rather than large datasets.
+
+####Phase 1 — Why it works
+
+We keep a separate test set because the goal is not to see how well the model remembers the training data, but how well it performs on new data it has never seen before. A model that only performs well on the training set is not useful in real-world applications because new inputs will always be different. Comparing training and test accuracy helps us judge the model's ability to generalize. If both accuracies are high and close together, the model generalizes well. A large gap usually indicates overfitting, while low accuracy on both training and test data indicates underfitting.
+
+*Prove-it 1
+Define overfitting and underfitting in your own words. How does each look on a learning curve?
+
+Overfitting happens when the model memorizes the training data instead of learning the underlying patterns. It achieves very high training accuracy but performs much worse on unseen test data. On a learning curve, overfitting appears as a large gap between the training and validation curves, with training accuracy much higher.
+
+Underfitting happens when the model is too simple to learn the patterns in the data. It performs poorly on both the training and test sets. On a learning curve, the training and validation curves stay close together, but both have low accuracy.
+
+*Prove-it 2
+You get 99% train, 62% test. Which is it, and name two things you'd try.
+
+This is a case of overfitting because the model performs extremely well on the training data but fails to generalize to unseen data.
+
+Two things I would try are:
+
+Reduce the complexity of the model or add regularization so it cannot memorize the training data as easily.
+Collect more training data or use better validation techniques so the model learns more general patterns instead of memorizing specific examples.
+*Prove-it 3
+Why is reporting only training accuracy meaningless?
+
+Reporting only training accuracy is misleading because the model has already seen those examples during training. A high training accuracy does not prove that the model has learned useful patterns—it may have simply memorized the training data. Without evaluating on unseen test data, we cannot tell whether the model can generalize to new examples.
+
+*Prove-it 4
+If your test set is tiny, why might a high test accuracy still be untrustworthy?
+
+A very small test set may not represent the full variety of the data. The model might perform well simply because those few test examples happen to be easy or similar to the training data. This can give an overly optimistic accuracy that may not hold when the model is tested on a much larger and more diverse dataset.
