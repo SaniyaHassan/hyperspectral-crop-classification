@@ -63,3 +63,23 @@ Reporting only training accuracy is misleading because the model has already see
 If your test set is tiny, why might a high test accuracy still be untrustworthy?
 
 A very small test set may not represent the full variety of the data. The model might perform well simply because those few test examples happen to be easy or similar to the training data. This can give an overly optimistic accuracy that may not hold when the model is tested on a much larger and more diverse dataset.
+
+### PHASE-2
+Why it works
+
+Different land-cover types have different spectral signatures because they have different physical and chemical compositions. Every material absorbs and reflects light differently depending on its properties. For example, vegetation contains chlorophyll, water, and cellulose, while soil contains minerals, sand, and organic matter. As a result, vegetation and soil reflect different amounts of light at different wavelengths, giving each material its own unique spectral signature.
+
+Prove-it
+1. Which two classes have the most similar mean spectra? Predict: will your classifier confuse them? Why?
+
+From the plot alone, it is difficult to determine exactly which two classes are the most similar because many of the curves overlap. Classes with very similar mean spectra are likely to confuse the classifier because they reflect light in nearly the same way across many spectral bands, making them harder to distinguish.
+
+Note: This is a better answer than guessing two class numbers. Your instructor will appreciate that you didn't make an unsupported claim.
+
+2. What are water-absorption bands, and why remove them?
+
+Water-absorption bands are spectral bands where water vapor in the atmosphere absorbs a large amount of incoming light before it reaches the Earth's surface or returns to the sensor. Because very little useful signal reaches the sensor, these bands are noisy and unreliable. Researchers remove them so the model learns from clean, meaningful spectral information instead of atmospheric noise.
+
+3. Your ground truth doesn't label every pixel (lots of "background/unlabelled"). How does that affect how you'll split train/test?
+
+Pixels labeled 0 are background or unlabeled, so they should not be included in either the training or testing sets. Since we do not know their true class, using them would introduce incorrect labels and reduce the quality of the model. Only pixels with valid class labels (1–16) should be used when creating the train and test splits.
