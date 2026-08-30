@@ -1,0 +1,8 @@
+# torch: install with `pip install torch --index-url https://download.pytorch.org/whl/cpu`
+# (CPU-only build; this project doesn't need a GPU)
+numpy==2.2.6
+scipy==1.15.3
+scikit-learn==1.7.2
+matplotlib==3.10.9
+torch==2.13.0
+pennylane==0.42.3
