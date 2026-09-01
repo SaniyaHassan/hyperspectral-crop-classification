@@ -64,7 +64,11 @@ June, before canopy closure, so row-crop pixels are still a soil/plant mixture.
 - **Train/test split is pixel-random, not spatially block-held-out.** Train and test
   pixels can sit a few pixels apart inside the same field, so the model has effectively
   already seen the spectral signature of every field it's "tested" on. Reported accuracies
-  are likely optimistic relative to performance on a genuinely unseen field.
+  are likely optimistic relative to performance on a genuinely unseen field. `spatial_holdout/`
+  measures this directly: the same MLP architecture, re-evaluated on a spatially disjoint
+  split (whole field patches assigned to train or test, never individual pixels), drops from
+  92.9% to 42.9% on a harder 9-class subset. See `spatial_holdout/notes.md` for the full
+  breakdown and why 7 of the 16 classes can't be fairly included in that evaluation.
 - **No radiometric calibration.** The cube's digital numbers are only proportional to true
   surface reflectance, not equal to it — there's no atmospheric correction or reference
   panel in this benchmark. Absolute index values (NDVI, NDRE, CIre) shouldn't be compared

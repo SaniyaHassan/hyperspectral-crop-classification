@@ -25,6 +25,7 @@ Full write-up: [`report.md`](report.md). Full phase-by-phase notes and reasoning
 | [`phase6_eval/`](phase6_eval) | Full classification map, per-class precision/recall | macro F1 0.939 |
 | [`phase7_paper/`](phase7_paper) | Reproduces a PCA+SVM protocol from published literature | see `phase7_paper/notes.md` |
 | [`quantum_extension/`](quantum_extension) | Variational quantum classifier vs. classical SVM | 56.0% vs 78.0% test accuracy |
+| [`spatial_holdout/`](spatial_holdout) | Re-evaluates the MLP on a spatially disjoint split | 92.9% → 42.9% test accuracy |
 
 ## Running it
 
@@ -46,7 +47,9 @@ into `data/` (gitignored, not committed).
 
 ## Limitations
 
-The train/test split is pixel-random rather than spatially block-held-out, so reported
-accuracies likely overstate performance on a genuinely unseen field. The vegetation-index
-wavelength mapping is derived rather than taken from an exact sensor calibration file, since
-none is publicly available for this scene. Full discussion in `report.md`.
+The train/test split used in phases 0-7 is pixel-random rather than spatially held-out, so
+those accuracies likely overstate performance on a genuinely unseen field --
+[`spatial_holdout/`](spatial_holdout) measures the actual size of that gap (92.9% → 42.9%).
+The vegetation-index wavelength mapping is derived rather than taken from an exact sensor
+calibration file, since none is publicly available for this scene. Full discussion in
+`report.md`.
