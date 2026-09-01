@@ -53,3 +53,34 @@ explain most of the gap:
 or more expressive ansatz (e.g. `StronglyEntanglingLayers`, or a quantum kernel method
 rather than a variational circuit), and enough compute to do that without a 5-minute
 training run becoming a multi-hour one.
+
+## Follow-up: does a bigger circuit close the gap? (`improved_ansatz.py`)
+
+Tried both next steps from above at once: 6 qubits instead of 4 (91.2% PCA variance
+retained instead of 88.8%), and `qml.StronglyEntanglingLayers` instead of
+`qml.BasicEntanglerLayers` (54 trainable weights instead of 18). Sample count and epochs
+were both reduced (120 train / 40 test, 30 epochs vs. the original's 240 train / 100 test,
+40 epochs) purely because a 6-qubit statevector with 3x the parameters per layer was no
+longer tractable at the original scale on a laptop CPU in reasonable time.
+
+| Model | Test accuracy | Train time |
+|---|---|---|
+| Classical SVM (6 PCA features) | 80.0% | 0.004s |
+| Quantum VQC, 4 qubits, BasicEntanglerLayers (original) | 56.0% | 284.6s |
+| Quantum VQC, 6 qubits, StronglyEntanglingLayers (this run) | **72.5%** | 125.6s |
+
+The gap to classical narrowed a lot — from 22 points down to 7.5. Training accuracy was
+still climbing at epoch 30 (`improved_ansatz_comparison.png`, left panel) when the run was
+cut off for time, so this number is likely a slight underestimate of what the same setup
+would reach with more epochs, not a converged ceiling. The 125.6s vs. 284.6s training time
+isn't a fair speed comparison either way — this run trained on half as many samples for
+fewer epochs, so it doesn't mean a bigger circuit trains faster; it means less data made it
+feasible to run at all.
+
+**Honest takeaway:** the earlier interpretation was right that ansatz expressiveness and
+qubit count (aggressive PCA compression) were real bottlenecks, not just an artifact of
+quantum computing being inherently worse at this task — improving both closed roughly
+two-thirds of the gap to classical. The remaining gap and the sample-size compromise this
+run needed both point the same direction: a more capable simulator (GPU-backed, or fewer
+per-sample circuit evaluations via batching) is the next real lever, not further architecture
+tweaks on this same laptop-CPU setup.
