@@ -34,11 +34,10 @@ weight decay 1e-4, 1000 epochs) -- the only thing that changed is the split.
 | Pixel-random (Phase 4) | 92.9% | 16 / 16 |
 | Spatial holdout (this script) | **42.9%** | 9 / 16 |
 
-That's not a small correction -- accuracy roughly halves. The two numbers aren't directly
-comparable (different classes, different pixel counts), but the direction and size of the
-drop is the real finding: most of Phase 4's reported accuracy was coming from the model
-having already seen each field's spectral signature, not from genuinely learning to
-distinguish crop types.
+Accuracy roughly halves. The two numbers aren't directly comparable (different classes,
+different pixel counts), but the direction and size of the drop shows that most of Phase 4's
+reported accuracy was coming from the model having already seen each field's spectral
+signature, not from learning to distinguish crop types independent of location.
 
 `spatial_split_map.png` shows which patches went where. `split_comparison.png` is the bar
 chart above.
@@ -54,9 +53,9 @@ once the model can't lean on having seen the specific field.
 
 The 92.9% number in `report.md` and the classification map in `phase6_eval/` are left as-is --
 they're accurate descriptions of what a pixel-random evaluation shows, and changing them
-after the fact would erase the point of this comparison. What changes is the honest framing:
-92.9% is an optimistic upper bound under an evaluation protocol with known leakage; 42.9% is a
-first honest estimate of performance on genuinely unseen fields, on a harder 9-class subset.
+after the fact would remove the point of this comparison. 92.9% is the result under an
+evaluation protocol with known leakage; 42.9% is a first estimate of performance on fields
+the model hasn't seen, on a harder 9-class subset.
 
 ## Next steps
 

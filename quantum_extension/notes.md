@@ -77,10 +77,9 @@ isn't a fair speed comparison either way — this run trained on half as many sa
 fewer epochs, so it doesn't mean a bigger circuit trains faster; it means less data made it
 feasible to run at all.
 
-**Honest takeaway:** the earlier interpretation was right that ansatz expressiveness and
-qubit count (aggressive PCA compression) were real bottlenecks, not just an artifact of
-quantum computing being inherently worse at this task — improving both closed roughly
-two-thirds of the gap to classical. The remaining gap and the sample-size compromise this
-run needed both point the same direction: a more capable simulator (GPU-backed, or fewer
-per-sample circuit evaluations via batching) is the next real lever, not further architecture
+**Takeaway:** ansatz expressiveness and qubit count (aggressive PCA compression) were real
+bottlenecks, not an inherent limit of quantum computing on this task — improving both closed
+roughly two-thirds of the gap to classical. The remaining gap and the sample-size compromise
+this run needed both point the same direction: a more capable simulator (GPU-backed, or fewer
+per-sample circuit evaluations via batching) is the next lever, not further architecture
 tweaks on this same laptop-CPU setup.

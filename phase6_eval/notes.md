@@ -18,20 +18,18 @@ gone after filtering, and the map looks close to the ground truth. This matches 
 finding in the hyperspectral literature that spatial post-processing meaningfully improves
 on pixel-independent classification.
 
-## The honest caveat
+## Caveat
 
-This test-set number benefits from something related to what `spatial_holdout/` already
-flagged. The majority filter pulls each pixel's label from its *spatial neighbors* --
-and because the underlying split is pixel-random, a test pixel's neighbors are very likely
-training pixels the model has already fit closely. So part of this gain is genuine
-error-correction (isolated bad predictions getting outvoted by a locally consistent
-neighborhood), but part of it is the test pixel indirectly "borrowing" its neighbors'
-already-memorized correct labels -- the same leakage mechanism as the pixel-random split
-itself, just working through the filter instead of through training directly.
+This test-set number is connected to what `spatial_holdout/` already flagged. The majority
+filter pulls each pixel's label from its *spatial neighbors* -- and because the underlying
+split is pixel-random, a test pixel's neighbors are very likely training pixels the model has
+already fit closely. So part of this gain is error-correction (isolated bad predictions
+getting outvoted by a locally consistent neighborhood), and part of it is the test pixel
+picking up its neighbors' already-memorized labels -- the same leakage mechanism as the
+pixel-random split itself, working through the filter instead of through training directly.
 
-The filter is still a legitimate, standard technique and the visual cleanup is real. But the
-98.6% number should be read as "spatial smoothing helps, especially with this split," not as
-a clean, leakage-free accuracy figure. A fair standalone test would be applying this same
-filter to the spatial-holdout predictions from `spatial_holdout/` instead, where neighbors
-are much less likely to already be memorized. That's a natural next step, not done here for
-time.
+The filter is a standard technique and the visual cleanup is real. But the 98.6% number
+should be read as "spatial smoothing helps, especially with this split," not as a
+leakage-free accuracy figure. A standalone test would be applying this same filter to the
+spatial-holdout predictions from `spatial_holdout/` instead, where neighbors are much less
+likely to already be memorized -- not done here for time.

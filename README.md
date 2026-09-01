@@ -48,7 +48,7 @@ into `data/` (gitignored, not committed).
 ## Limitations
 
 The train/test split used in phases 0-7 is pixel-random rather than spatially held-out, so
-those accuracies likely overstate performance on a genuinely unseen field --
+those accuracies likely overstate performance on a field the model hasn't seen --
 [`spatial_holdout/`](spatial_holdout) measures the actual size of that gap (92.9% → 42.9%).
 The vegetation-index wavelength mapping is derived rather than taken from an exact sensor
 calibration file, since none is publicly available for this scene. Full discussion in

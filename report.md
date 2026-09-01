@@ -56,7 +56,7 @@ spatial context. `phase6_eval/majority_filter.py` applies the standard fix (a 3�
 post-classification majority vote), which raises held-out test accuracy from 92.9% to 98.6%
 and visibly cleans up the speckle — though part of that gain is the same pixel-random-split
 leakage flagged above, working through spatial neighbors instead of through training
-directly; see `phase6_eval/notes.md` for the honest breakdown.
+directly; see `phase6_eval/notes.md` for the breakdown.
 
 NDVI/NDRE (`phase5_indices/`) correctly separate established vegetation (Woods,
 Grass-pasture) from non-vegetated surfaces (Stone-Steel-Towers), but row crops
@@ -68,7 +68,7 @@ June, before canopy closure, so row-crop pixels are still a soil/plant mixture.
 - **Train/test split is pixel-random, not spatially block-held-out.** Train and test
   pixels can sit a few pixels apart inside the same field, so the model has effectively
   already seen the spectral signature of every field it's "tested" on. Reported accuracies
-  are likely optimistic relative to performance on a genuinely unseen field. `spatial_holdout/`
+  are likely optimistic relative to performance on a field the model hasn't seen. `spatial_holdout/`
   measures this directly: the same MLP architecture, re-evaluated on a spatially disjoint
   split (whole field patches assigned to train or test, never individual pixels), drops from
   92.9% to 42.9% on a harder 9-class subset. See `spatial_holdout/notes.md` for the full
@@ -117,13 +117,12 @@ concrete ways that would change this pipeline:
 
 Two pieces of this project go beyond the core pipeline:
 
-**Quantum classifier.** `quantum_extension/` contains a real PennyLane variational quantum
+**Quantum classifier.** `quantum_extension/` contains a PennyLane variational quantum
 classifier trained on PCA-reduced features from this cube, compared against a classical SVM
-on the identical features (56.0% quantum vs. 78.0% classical test accuracy, ~56,000x slower
-to train on a CPU simulator). The result isn't flattering, and it's reported as-is — a real,
-reproducible demonstration of where a small hand-built variational circuit currently stands
-relative to a classical baseline, and of the practical simulation-speed wall that motivates
-using real quantum hardware or better simulation tooling. Full breakdown in
+on the identical features. A 4-qubit circuit reached 56.0% vs. 78.0% classical, ~56,000x
+slower to train on a CPU simulator. A follow-up with 6 qubits and a more expressive ansatz
+(`StronglyEntanglingLayers`) reached 72.5% vs. 80.0% classical, narrowing most of the gap.
+Full breakdown, including the practical CPU-simulation limits this ran into, in
 `quantum_extension/notes.md`.
 
 **Nitrogen-status index.** Phase 5 computes NDVI and NDRE, then extends to CIre (Chlorophyll
