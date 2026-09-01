@@ -52,7 +52,11 @@ spectral-mixture class, confused mostly with pure Woods, consistent with the spe
 similarity already visible in Phase 2's class-mean spectra and Phase 3's SVM confusion
 matrix. The classification map also shows visible pixel-level "speckle" inside otherwise
 uniform fields — the expected signature of classifying each pixel independently with no
-spatial context.
+spatial context. `phase6_eval/majority_filter.py` applies the standard fix (a 3×3
+post-classification majority vote), which raises held-out test accuracy from 92.9% to 98.6%
+and visibly cleans up the speckle — though part of that gain is the same pixel-random-split
+leakage flagged above, working through spatial neighbors instead of through training
+directly; see `phase6_eval/notes.md` for the honest breakdown.
 
 NDVI/NDRE (`phase5_indices/`) correctly separate established vegetation (Woods,
 Grass-pasture) from non-vegetated surfaces (Stone-Steel-Towers), but row crops

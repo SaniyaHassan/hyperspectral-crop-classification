@@ -21,8 +21,8 @@ Full write-up: [`report.md`](report.md). Full phase-by-phase notes and reasoning
 | [`phase2_data/`](phase2_data) | Per-class mean spectra, ground-truth map | 16 class spectral signatures |
 | [`phase3_svm/`](phase3_svm) | Baseline SVM classifier | 82.0% test accuracy |
 | [`phase4_mlp/`](phase4_mlp) | Hand-built PyTorch MLP, regularization comparison | **92.9% test accuracy** |
-| [`phase5_indices/`](phase5_indices) | NDVI, NDRE, and a nitrogen-status index | see `report.md` |
-| [`phase6_eval/`](phase6_eval) | Full classification map, per-class precision/recall | macro F1 0.939 |
+| [`phase5_indices/`](phase5_indices) | NDVI, NDRE, and a nitrogen-status index | see `phase5_indices/notes.md` |
+| [`phase6_eval/`](phase6_eval) | Full classification map, per-class precision/recall, + a post-classification majority filter | macro F1 0.939, filter 92.9% → 98.6% |
 | [`phase7_paper/`](phase7_paper) | Reproduces a PCA+SVM protocol from published literature | see `phase7_paper/notes.md` |
 | [`quantum_extension/`](quantum_extension) | Variational quantum classifier vs. classical SVM | 56.0% vs 78.0% test accuracy |
 | [`spatial_holdout/`](spatial_holdout) | Re-evaluates the MLP on a spatially disjoint split | 92.9% → 42.9% test accuracy |
